@@ -3,15 +3,16 @@ import { json } from '@sveltejs/kit';
 import { QdrantClient } from '@qdrant/js-client-rest';
 import OpenAI from 'openai';
 import type { XkcdSuggestion } from '$lib/models/XkcdSuggestion.js';
+import { availableModels } from '$lib/util/models';
 
-async function getEmbedding(text: string) {
+async function getEmbedding(model: OpenAI.Embeddings.EmbeddingModel, input: string) {
 	const openai = new OpenAI({
 		apiKey: OPENAI_API_KEY
 	});
 
 	const response = await openai.embeddings.create({
-		model: 'text-embedding-3-large',
-		input: text,
+		model,
+		input,
 		encoding_format: 'float'
 	});
 
@@ -19,10 +20,11 @@ async function getEmbedding(text: string) {
 }
 
 export async function POST({ request }) {
+	const { query, model: modelIndex } = await request.json();
+	const model = availableModels[modelIndex];
 	const qdrant = new QdrantClient({ url: QDRANT_CONNECTION_URL });
-	const body = await request.json();
-	const embedding = await getEmbedding(body.query);
-	const result = await qdrant.search('xkcd_comics_lg', {
+	const embedding = await getEmbedding(model.openAiModel, query);
+	const result = await qdrant.search(model.qdrantCollection, {
 		vector: embedding,
 		limit: 4
 	});

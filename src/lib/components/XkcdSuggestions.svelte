@@ -39,11 +39,14 @@
 	}
 
   .suggestion {
-    flex: 1 1 auto;
+    aspect-ratio: 1;
+    flex: 1 1 0;
   }
 
   .suggestion img {
     width: 100%;
+    height: 100%;
+    object-fit: contain;
     display: block;
   }
 </style>
