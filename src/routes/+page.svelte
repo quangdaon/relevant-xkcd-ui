@@ -24,14 +24,68 @@
 	};
 </script>
 
-<ModelPicker bind:value={model} />
-<form onsubmit={submit}>
-	<input type="text" bind:value={query} />
-	<button>Submit</button>
-</form>
+<main>
+	<div class="container">
+		<h1>Relevant XKCD</h1>
 
-{#if loading}
-	<p>Loading...</p>
-{:else if found}
-	<XkcdSuggestions comics={found} />
-{/if}
+		<form class="form" onsubmit={submit}>
+			<textarea bind:value={query} rows="2" maxlength="500"></textarea>
+
+			<div class="form-settings">
+				<label>
+					Model<sup><a href="/methodology">?</a></sup>:
+					<ModelPicker bind:value={model} />
+				</label>
+				<button>Submit</button>
+			</div>
+		</form>
+
+		{#if loading}
+			<p>Loading...</p>
+		{:else if found}
+			<XkcdSuggestions comics={found} />
+		{/if}
+	</div>
+</main>
+
+<style>
+	.form textarea,
+	.form-settings {
+		border: 3px solid var(--color-black);
+	}
+
+	.form textarea {
+		border-bottom: none;
+		width: 100%;
+		resize: vertical;
+		margin: 0;
+		padding: 1rem;
+		font-size: 2em;
+		background: none;
+		min-height: 2em;
+		max-height: 70vh;
+	}
+
+	.form:has(textarea:focus) {
+		outline: 2px solid var(--color-blue);
+	}
+
+	.form textarea {
+		outline: none;
+	}
+
+	.form-settings {
+		width: 100%;
+		display: flex;
+		gap: 0.5em;
+		justify-content: end;
+		padding: 0.5em;
+		border-top: none;
+	}
+
+	.form-settings label {
+		display: inline-block;
+		vertical-align: middle;
+		font-weight: bold;
+	}
+</style>

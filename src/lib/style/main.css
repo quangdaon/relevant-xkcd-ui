@@ -1,0 +1,57 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+:root {
+	--color-white: #fbfef9;
+	--color-black: #0a1045;
+	--color-blue: #067bc2;
+	--color-slate: #35605a;
+
+	--color-background: var(--color-white);
+	--color-text: var(--color-black);
+	--color-link: var(--color-blue);
+	--color-accent: var(--color-slate);
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	background: var(--color-background);
+	color: var(--color-text);
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+}
+
+select,
+button,
+input,
+textarea {
+	font-family: inherit;
+}
+
+a,
+a:link,
+a:visited {
+	color: var(--color-link);
+}
+
+button,
+select {
+	background: var(--color-accent);
+	color: var(--color-white);
+	border: none;
+	border-radius: 0.5em;
+	padding: 0.25em 0.5em;
+	line-height: 1;
+	font-size: 1em;
+	cursor: pointer;
+}
+
+.container {
+	max-width: 1080px;
+	padding: 0 1em;
+	margin: auto;
+}

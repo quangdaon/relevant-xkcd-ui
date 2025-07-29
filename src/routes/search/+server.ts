@@ -35,7 +35,9 @@ export async function POST({ request }) {
 			title: (r.payload?.title as string) ?? '',
 			comicUrl: `https://xkcd.com/${r.id}/`,
 			imageUrl: (r.payload?.img as string) ?? '',
-			explanationUrl: (r.payload?.explanation_wiki_url as string) ?? ''
+			explanationUrl:
+				(r.payload?.explanation_wiki_url as string) ||
+				`https://www.explainxkcd.com/wiki/index.php/${r.id}`
 		}));
 	return json(suggestions);
 }

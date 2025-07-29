@@ -10,11 +10,20 @@
 	const secondaries = $derived(comics.slice(1));
 </script>
 
-<div class="match">
+<div class="primary">
 	<h2>{primary.title}</h2>
 	<a href={primary.comicUrl}>
 		<img src={primary.imageUrl} alt={primary.title} />
 	</a>
+	<div class="primary-links">
+		<div class="permalink">
+			<b>Permalink:</b> <a href={primary.comicUrl}>{primary.comicUrl}</a>
+		</div>
+
+		<div class="explanation">
+			<a href={primary.explanationUrl}>Explain</a>
+		</div>
+	</div>
 </div>
 
 <div class="suggestions">
@@ -31,22 +40,58 @@
 </div>
 
 <style>
-	.suggestions-list {
-		display: flex;
-    gap: 1em;
-    justify-content: stretch;
-    width: 100%;
+	h2,
+	h3 {
+		text-align: center;
 	}
 
-  .suggestion {
-    aspect-ratio: 1;
-    flex: 1 1 0;
-  }
+	.primary {
+		margin-bottom: 2em;
+	}
 
-  .suggestion img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
+	.primary img {
+		display: block;
+		width: 100%;
+	}
+
+	.suggestion img {
+		display: block;
+		width: 100%;
+		margin-bottom: 1em;
+	}
+
+	.primary-links {
+		margin-top: 1em;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	img {
+		mix-blend-mode: darken;
+	}
+
+	@media only screen and (min-width: 900px) {
+		.primary img {
+			max-width: 60%;
+      margin: auto;
+		}
+		.suggestions-list {
+			display: flex;
+			gap: 1em;
+			justify-content: stretch;
+			width: 100%;
+		}
+
+		.suggestion {
+			aspect-ratio: 1;
+			flex: 1 1 0;
+		}
+
+		.suggestion img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			display: block;
+		}
+	}
 </style>
