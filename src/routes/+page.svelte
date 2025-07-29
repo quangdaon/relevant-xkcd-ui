@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Loader from '$lib/components/Loader.svelte';
 	import ModelPicker from '$lib/components/ModelPicker.svelte';
 	import ModelsUnlockedMessage from '$lib/components/ModelsUnlockedMessage.svelte';
 	import XkcdSuggestions from '$lib/components/XkcdSuggestions.svelte';
@@ -11,7 +12,7 @@
 
 	const search = async () => {
 		if (!$isModelPickerUnlocked && query === '404') {
-      // Oh, hi! I guess this is one way to discover my secret.
+			// Oh, hi! I guess this is one way to discover my secret.
 			$isModelPickerUnlocked = true;
 			modelUnlockedMessage = true;
 			return;
@@ -67,7 +68,7 @@
 		{#if modelUnlockedMessage}
 			<ModelsUnlockedMessage />
 		{:else if loading}
-			<p>Loading...</p>
+			<Loader />
 		{:else if found}
 			<XkcdSuggestions comics={found} />
 		{/if}
