@@ -21,7 +21,7 @@ async function getEmbedding(model: OpenAI.Embeddings.EmbeddingModel, input: stri
 
 export async function POST({ request }) {
 	const { query, model: modelIndex } = await request.json();
-	const model = availableModels[modelIndex];
+	const model = availableModels[modelIndex ?? 0];
 	const qdrant = new QdrantClient({ url: QDRANT_CONNECTION_URL });
 	const embedding = await getEmbedding(model.openAiModel, query);
 	const result = await qdrant.search(model.qdrantCollection, {

@@ -1,17 +1,31 @@
 <script lang="ts">
 	import ModelPicker from '$lib/components/ModelPicker.svelte';
+	import ModelsUnlockedMessage from '$lib/components/ModelsUnlockedMessage.svelte';
 	import XkcdSuggestions from '$lib/components/XkcdSuggestions.svelte';
+	import { isModelPickerUnlocked, selectedModel } from '$lib/state/models';
 
 	let found = $state(null);
 	let query = $state('');
 	let loading = $state(false);
-	let model = $state(0);
+	let modelUnlockedMessage = $state(false);
 
 	const search = async () => {
+		if (!$isModelPickerUnlocked && query === '404') {
+      // Oh, hi! I guess this is one way to discover my secret.
+			$isModelPickerUnlocked = true;
+			modelUnlockedMessage = true;
+			return;
+		}
+
+		modelUnlockedMessage = false;
 		loading = true;
+
+		const reqBody: any = { query };
+
+		if ($isModelPickerUnlocked) reqBody.model = $selectedModel;
 		const req = await fetch('/search', {
 			method: 'POST',
-			body: JSON.stringify({ query, model })
+			body: JSON.stringify(reqBody)
 		});
 
 		found = await req.json();
@@ -22,6 +36,13 @@
 		evt.preventDefault();
 		await search();
 	};
+
+	const handleTextKeydown = async (evt: KeyboardEvent) => {
+		if (evt.key === 'Enter' && !evt.shiftKey) {
+			evt.preventDefault();
+			await search();
+		}
+	};
 </script>
 
 <main>
@@ -29,18 +50,23 @@
 		<h1>Relevant XKCD</h1>
 
 		<form class="form" onsubmit={submit}>
-			<textarea bind:value={query} rows="2" maxlength="500"></textarea>
+			<textarea bind:value={query} rows="2" maxlength="500" onkeydown={handleTextKeydown}
+			></textarea>
 
 			<div class="form-settings">
-				<label>
-					Model<sup><a href="/methodology">?</a></sup>:
-					<ModelPicker bind:value={model} />
-				</label>
+				{#if $isModelPickerUnlocked}
+					<label>
+						Model<sup><a href="/methodology">?</a></sup>:
+						<ModelPicker bind:value={$selectedModel} />
+					</label>
+				{/if}
 				<button>Submit</button>
 			</div>
 		</form>
 
-		{#if loading}
+		{#if modelUnlockedMessage}
+			<ModelsUnlockedMessage />
+		{:else if loading}
 			<p>Loading...</p>
 		{:else if found}
 			<XkcdSuggestions comics={found} />
