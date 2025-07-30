@@ -1,5 +1,7 @@
 # sv
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/834198c3-6d10-425e-8dc4-7aaf56788864/deploy-status)](https://app.netlify.com/projects/lively-genie-d346c7/deploys)
+
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
 ## Creating a project

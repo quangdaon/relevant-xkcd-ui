@@ -56,42 +56,38 @@
 	};
 </script>
 
-<main>
-	<div class="container">
-		<h1>Relevant XKCD</h1>
+<h1>Relevant XKCD</h1>
 
-		<form class="form" onsubmit={submit}>
-			<textarea
-				bind:value={query}
-				rows="2"
-				maxlength="500"
-				onkeydown={handleTextKeydown}
-				placeholder={`Example: ${samplePrompt}`}
-			></textarea>
+<form class="form" onsubmit={submit}>
+	<textarea
+		bind:value={query}
+		rows="2"
+		maxlength="500"
+		onkeydown={handleTextKeydown}
+		placeholder={`Example: ${samplePrompt}`}
+	></textarea>
 
-			<div class="form-settings">
-				{#if $isModelPickerUnlocked}
-					<label>
-						Model<sup><a href="/methodology">?</a></sup>:
-						<ModelPicker bind:value={$selectedModel} />
-					</label>
-				{/if}
-				<button>Submit</button>
-			</div>
-		</form>
-
-		{#if modelUnlockedMessage}
-			<ModelsUnlockedMessage />
-		{:else if loading}
-			<Loader />
-		{:else if found}
-			{#if isWtfpmQuery}
-				<WtfsPerMinute />
-			{/if}
-			<XkcdSuggestions comics={found} />
+	<div class="form-settings">
+		{#if $isModelPickerUnlocked}
+			<label>
+				Model<sup><a href="/methodology">?</a></sup>:
+				<ModelPicker bind:value={$selectedModel} />
+			</label>
 		{/if}
+		<button>Submit</button>
 	</div>
-</main>
+</form>
+
+{#if modelUnlockedMessage}
+	<ModelsUnlockedMessage />
+{:else if loading}
+	<Loader />
+{:else if found}
+	{#if isWtfpmQuery}
+		<WtfsPerMinute />
+	{/if}
+	<XkcdSuggestions comics={found} />
+{/if}
 
 <style>
 	.form textarea,
