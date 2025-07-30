@@ -2,10 +2,14 @@
 	import Loader from '$lib/components/Loader.svelte';
 	import ModelPicker from '$lib/components/ModelPicker.svelte';
 	import ModelsUnlockedMessage from '$lib/components/ModelsUnlockedMessage.svelte';
+	import WtfsPerMinute from '$lib/components/WtfsPerMinute.svelte';
 	import XkcdSuggestions from '$lib/components/XkcdSuggestions.svelte';
 	import { isModelPickerUnlocked, selectedModel } from '$lib/state/models';
 
 	const { data } = $props();
+
+	const isWtfpm = (q: string) =>
+		/^(wt|what the)\s*(eff|f(uck)?)s?\s*(freq(uency)?|rate|(\/|p(er)?)?\s*m(in(ute)?)?)$/.test(q);
 
 	const { samplePrompt } = data;
 
@@ -13,6 +17,7 @@
 	let query = $state('');
 	let loading = $state(false);
 	let modelUnlockedMessage = $state(false);
+	let isWtfpmQuery = $state(false);
 
 	const search = async () => {
 		if (!$isModelPickerUnlocked && query === '404') {
@@ -22,6 +27,7 @@
 			return;
 		}
 
+		isWtfpmQuery = isWtfpm(query.trim().toLowerCase());
 		modelUnlockedMessage = false;
 		loading = true;
 
@@ -79,6 +85,9 @@
 		{:else if loading}
 			<Loader />
 		{:else if found}
+			{#if isWtfpmQuery}
+				<WtfsPerMinute />
+			{/if}
 			<XkcdSuggestions comics={found} />
 		{/if}
 	</div>

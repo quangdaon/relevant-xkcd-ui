@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { XkcdSuggestion } from '$lib/models/XkcdSuggestion';
+	import ComicImage from './ComicImage.svelte';
 
 	interface Props {
 		comics: XkcdSuggestion[];
@@ -12,8 +13,8 @@
 
 <div class="primary">
 	<h2>{primary.title}</h2>
-	<a href={primary.comicUrl}>
-		<img src={primary.imageUrl} alt={primary.title} />
+	<a class="primary-comic" href={primary.comicUrl}>
+		<ComicImage src={primary.imageUrl} alt={primary.title} />
 	</a>
 	<div class="primary-links">
 		<div class="permalink">
@@ -32,7 +33,7 @@
 		{#each secondaries as sug}
 			<div class="suggestion">
 				<a href={sug.comicUrl}>
-					<img src={sug.imageUrl} alt={sug.title} />
+					<ComicImage src={sug.imageUrl} alt={sug.title} title={sug.title} />
 				</a>
 			</div>
 		{/each}
@@ -49,14 +50,7 @@
 		margin-bottom: 2em;
 	}
 
-	.primary img {
-		display: block;
-		width: 100%;
-	}
-
-	.suggestion img {
-		display: block;
-		width: 100%;
+	.suggestion {
 		margin-bottom: 1em;
 	}
 
@@ -66,32 +60,22 @@
 		justify-content: space-between;
 	}
 
-	img {
-		mix-blend-mode: darken;
-	}
-
 	@media only screen and (min-width: 900px) {
-		.primary img {
+		.primary-comic {
+      display: block;
 			max-width: 60%;
-      margin: auto;
+			margin: auto;
 		}
 		.suggestions-list {
 			display: flex;
 			gap: 1em;
 			justify-content: stretch;
+			align-items: center;
 			width: 100%;
 		}
 
 		.suggestion {
-			aspect-ratio: 1;
 			flex: 1 1 0;
-		}
-
-		.suggestion img {
-			width: 100%;
-			height: 100%;
-			object-fit: contain;
-			display: block;
 		}
 	}
 </style>
