@@ -15,6 +15,9 @@ const config = {
 		paths: {
 			base: process.env['APPLICATION_BASE_PATH'] || '',
 			relative: false
+		},
+		csrf: {
+			checkOrigin: false
 		}
 	}
 };
