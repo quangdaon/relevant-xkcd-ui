@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { isModelPickerUnlocked } from '$lib/state/models';
 	import ModelVariants from './ModelVariants.svelte';
 </script>
@@ -6,7 +7,7 @@
 <h1>Methodology</h1>
 
 <p>
-	<a href="/">Back to Relevant xkcd</a>
+	<a href={resolve('/')}>Back to Relevant xkcd</a>
 </p>
 
 <p>

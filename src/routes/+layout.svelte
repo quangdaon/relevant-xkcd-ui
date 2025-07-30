@@ -1,5 +1,6 @@
 <script>
-	import '$lib/style/main.css';
+	import { resolve } from '$app/paths';
+import '$lib/style/main.css';
 
 	const { children } = $props();
 </script>
@@ -12,7 +13,7 @@
 
 <footer class="container">
 	A <a href="https://www.quangdao.com/">Quangdao Nguyen</a> catastrophe. All rights reserved. |
-	<a href="/privacy">Privacy Policy</a>
+	<a href={resolve('/privacy')}>Privacy Policy</a>
 </footer>
 
 <style>

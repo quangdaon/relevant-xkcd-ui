@@ -1,4 +1,5 @@
 <script>
+	import { asset } from '$app/paths';
 	import ComicImage from './ComicImage.svelte';
 </script>
 
@@ -11,7 +12,7 @@
 
 	<div class="comic">
 		<ComicImage
-			src="/wtfspm.webp"
+			src={asset('/wtfspm.webp')}
 			alt="The only valid measurement of code quality: WTFs/minute"
 			title="Not XKCD, but close enough to fool 93% of developers."
 		/>

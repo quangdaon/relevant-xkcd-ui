@@ -1,9 +1,10 @@
 <script>
+	import { asset } from '$app/paths';
 	import { fade } from 'svelte/transition';
 </script>
 
 <div class="loader" transition:fade={{ duration: 120 }}>
-	<img src="/xkcd_waiting_upscaled.png" alt="XKCD characters sitting and waiting" />
+	<img src={asset('/xkcd_waiting_upscaled.png')} alt="XKCD characters sitting and waiting" />
 	<div class="thinker thinker-left">
 		<div class="dot">.</div>
 		<div class="dot">.</div>

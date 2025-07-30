@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import Loader from '$lib/components/Loader.svelte';
 	import ModelPicker from '$lib/components/ModelPicker.svelte';
 	import ModelsUnlockedMessage from '$lib/components/ModelsUnlockedMessage.svelte';
@@ -34,7 +35,7 @@
 		const reqBody: any = { query: query || samplePrompt };
 
 		if ($isModelPickerUnlocked) reqBody.model = $selectedModel;
-		const req = await fetch('/search', {
+		const req = await fetch(resolve('/search'), {
 			method: 'POST',
 			body: JSON.stringify(reqBody)
 		});
@@ -70,7 +71,7 @@
 	<div class="form-settings">
 		{#if $isModelPickerUnlocked}
 			<label>
-				Model<sup><a href="/methodology">?</a></sup>:
+				Model<sup><a href={resolve('/methodology')}>?</a></sup>:
 				<ModelPicker bind:value={$selectedModel} />
 			</label>
 		{/if}

@@ -1,3 +1,8 @@
+<script>
+
+	import { resolve } from '$app/paths';
+
+</script>
 <h1>Privacy Policy</h1>
 
 <p>Last Updated: 2025-07-30</p>
@@ -29,5 +34,5 @@
 </p>
 
 <p>
-	<a href="/">Back to Relevant xkcd</a>
+	<a href={resolve('/')}>Back to Relevant xkcd</a>
 </p>
