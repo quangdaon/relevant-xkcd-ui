@@ -7,7 +7,7 @@
 {@render children?.()}
 
 <footer class="container">
-  A <a href="https://www.quangdao.com/">Quangdao Nguyen</a> catastrophe. All rights reserved.
+  A <a href="https://www.quangdao.com/">Quangdao Nguyen</a> catastrophe. All rights reserved. | <a href="/privacy">Privacy Policy</a>
 </footer>
 
 <style>
