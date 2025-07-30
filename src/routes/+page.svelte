@@ -5,6 +5,10 @@
 	import XkcdSuggestions from '$lib/components/XkcdSuggestions.svelte';
 	import { isModelPickerUnlocked, selectedModel } from '$lib/state/models';
 
+	const { data } = $props();
+
+	const { samplePrompt } = data;
+
 	let found = $state(null);
 	let query = $state('');
 	let loading = $state(false);
@@ -21,7 +25,7 @@
 		modelUnlockedMessage = false;
 		loading = true;
 
-		const reqBody: any = { query };
+		const reqBody: any = { query: query || samplePrompt };
 
 		if ($isModelPickerUnlocked) reqBody.model = $selectedModel;
 		const req = await fetch('/search', {
@@ -51,7 +55,12 @@
 		<h1>Relevant XKCD</h1>
 
 		<form class="form" onsubmit={submit}>
-			<textarea bind:value={query} rows="2" maxlength="500" onkeydown={handleTextKeydown}
+			<textarea
+				bind:value={query}
+				rows="2"
+				maxlength="500"
+				onkeydown={handleTextKeydown}
+				placeholder={`Example: ${samplePrompt}`}
 			></textarea>
 
 			<div class="form-settings">

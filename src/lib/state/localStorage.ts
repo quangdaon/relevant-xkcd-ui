@@ -12,7 +12,10 @@ export function localStorageWritable<T>(
 	const parsed = stored ? JSON.parse(stored) : null;
 	const store = writable<T>(parsed && sanitizer(parsed) ? parsed : value);
 
-	store.subscribe((v) => v === value || localStorage.setItem(key, JSON.stringify(v)));
+  store.subscribe((v) => {
+    if (stored === null && v === value) return;
+    return localStorage.setItem(key, JSON.stringify(v));
+  });
 
 	return store;
 }
