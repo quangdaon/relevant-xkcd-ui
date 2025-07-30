@@ -35,7 +35,7 @@
 		const reqBody: any = { query: query || samplePrompt };
 
 		if ($isModelPickerUnlocked) reqBody.model = $selectedModel;
-		const req = await fetch(resolve('/search'), {
+		const req = await fetch(resolve('/api/search'), {
 			method: 'POST',
 			body: JSON.stringify(reqBody)
 		});
