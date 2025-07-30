@@ -1,4 +1,4 @@
-import { QDRANT_CONNECTION_URL, OPENAI_API_KEY } from '$env/static/private';
+import { QDRANT_CONNECTION_URL, OPENAI_API_KEY, QDRANT_API_KEY } from '$env/static/private';
 import { json } from '@sveltejs/kit';
 import { QdrantClient } from '@qdrant/js-client-rest';
 import OpenAI from 'openai';
@@ -22,7 +22,7 @@ async function getEmbedding(model: OpenAI.Embeddings.EmbeddingModel, input: stri
 export async function POST({ request }) {
 	const { query, model: modelIndex } = await request.json();
 	const model = availableModels[modelIndex ?? 0];
-	const qdrant = new QdrantClient({ url: QDRANT_CONNECTION_URL });
+	const qdrant = new QdrantClient({ url: QDRANT_CONNECTION_URL, apiKey: QDRANT_API_KEY });
 	const embedding = await getEmbedding(model.openAiModel, query);
 	const result = await qdrant.search(model.qdrantCollection, {
 		vector: embedding,
