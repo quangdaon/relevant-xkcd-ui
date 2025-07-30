@@ -1,9 +1,9 @@
-import { QDRANT_CONNECTION_URL, OPENAI_API_KEY, QDRANT_API_KEY, ORIGIN } from '$env/static/private';
+import { QDRANT_CONNECTION_URL, OPENAI_API_KEY, QDRANT_API_KEY } from '$env/static/private';
 import { QdrantClient } from '@qdrant/js-client-rest';
 import OpenAI from 'openai';
 import type { XkcdSuggestion } from '$lib/models/XkcdSuggestion.js';
 import { availableModels } from '$lib/util/models';
-import { dev } from '$app/environment';
+import { json } from '@sveltejs/kit';
 
 async function getEmbedding(model: OpenAI.Embeddings.EmbeddingModel, input: string) {
 	const openai = new OpenAI({
@@ -41,11 +41,5 @@ export async function POST({ request }) {
 				`https://www.explainxkcd.com/wiki/index.php/${r.id}`
 		}));
 	
-	return new Response(JSON.stringify(suggestions), {
-		headers: {
-			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin': dev ? '*' : ORIGIN,
-			'Access-Control-Allow-Headers': 'Content-Type'
-		}
-	});
+		return json(suggestions);
 }
