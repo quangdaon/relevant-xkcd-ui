@@ -6,7 +6,6 @@ import { availableModels } from '$lib/util/models';
 import { json } from '@sveltejs/kit';
 
 async function getEmbedding(model: OpenAI.Embeddings.EmbeddingModel, input: string) {
-	throw new Error('test');
 	const openai = new OpenAI({
 		apiKey: OPENAI_API_KEY
 	});
