@@ -17,6 +17,7 @@
 	let found = $state(null);
 	let query = $state('');
 	let loading = $state(false);
+	let errored = $state(false);
 	let modelUnlockedMessage = $state(false);
 	let isWtfpmQuery = $state(false);
 
@@ -30,17 +31,27 @@
 
 		isWtfpmQuery = isWtfpm(query.trim().toLowerCase());
 		modelUnlockedMessage = false;
+		errored = false;
 		loading = true;
 
-		const reqBody: any = { query: query || samplePrompt };
+		try {
+			const reqBody: any = { query: query || samplePrompt };
 
-		if ($isModelPickerUnlocked) reqBody.model = $selectedModel;
-		const req = await fetch(resolve('/api/search'), {
-			method: 'POST',
-			body: JSON.stringify(reqBody)
-		});
+			if ($isModelPickerUnlocked) reqBody.model = $selectedModel;
+			const req = await fetch(resolve('/api/search'), {
+				method: 'POST',
+				body: JSON.stringify(reqBody)
+			});
 
-		found = await req.json();
+			if (req.ok) {
+				found = await req.json();
+			} else {
+				errored = true;
+			}
+		} catch {
+			errored = true;
+		}
+
 		loading = false;
 	};
 
@@ -83,6 +94,9 @@
 	<ModelsUnlockedMessage />
 {:else if loading}
 	<Loader />
+{:else if errored}
+	<h2>An error occurred.</h2>
+	<p>Please try again later.</p>
 {:else if found}
 	{#if isWtfpmQuery}
 		<WtfsPerMinute />
